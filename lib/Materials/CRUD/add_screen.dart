@@ -21,21 +21,16 @@ class _CRUDState extends State<CRUD> {
 
   Future<String> _uploadImage(File imageFile) async {
     try {
-      // Récupérer une référence vers le dossier de stockage Firebase où vous souhaitez enregistrer l'image
       Reference storageReference =
           FirebaseStorage.instance.ref().child('images').child('materiels');
 
-      // Uploader le fichier image vers Firebase Storage
       UploadTask uploadTask = storageReference.putFile(imageFile);
 
-      // Attendre que le téléchargement soit terminé et récupérer l'URL de l'image téléchargée
       TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
       String imageUrl = await taskSnapshot.ref.getDownloadURL();
 
-      // Retourner l'URL de l'image téléchargée
       return imageUrl;
     } catch (error) {
-      // Gérer les erreurs de téléchargement d'image ici
       print('Erreur lors du téléchargement de l\'image: $error');
       rethrow;
     }
@@ -164,7 +159,6 @@ class _CRUDState extends State<CRUD> {
   }
 
   void _displayTextInputDialog() async {
-    // Afficher une boîte de dialogue pour ajouter un nouveau matériel
     showDialog(
       context: context,
       builder: (context) {
@@ -177,23 +171,18 @@ class _CRUDState extends State<CRUD> {
             ),
           ),
           actions: <Widget>[
-            // Bouton pour sélectionner une image depuis la galerie
             MaterialButton(
               color: Theme.of(context).colorScheme.primary,
               textColor: Colors.white,
               child: const Icon(Icons.upload),
               onPressed: () async {
-                // Sélectionner une image depuis la galerie
                 File? selectedImage = await getImageFromGallery(context);
-                if (selectedImage != null) {
-                  // Passer le fichier image sélectionné à la méthode _uploadImage
+                if (selectedImage != null) { 
                   String imageUrl = await _uploadImage(selectedImage);
-                  // Ajouter le matériel avec l'URL de l'image
                   _addMaterielWithImage(imageUrl);
                 }
               },
             ),
-            // Bouton pour ajouter un matériel sans image
             MaterialButton(
               color: Theme.of(context).colorScheme.primary,
               textColor: Colors.white,
@@ -201,24 +190,20 @@ class _CRUDState extends State<CRUD> {
               onPressed: () async {
                 String nom = _textEditingController.text;
                 if (nom.isNotEmpty) {
-                  // Ajouter le matériel sans image
                   try {
                     await _databaseService.addMateriels(
                       nom: nom,
-                      imageUrl: '', // Définir l'URL de l'image comme vide
+                      imageUrl: '', 
                       probleme: false,
                       updatedOn: Timestamp.now(),
                     );
-                    // Fermer la boîte de dialogue
                     Navigator.pop(context);
                     _textEditingController.clear();
                   } catch (e) {
                     print(
                         'Une erreur est survenue lors de l\'ajout du matériel: $e');
-                    // Gérer les erreurs d'ajout du matériel
                   }
                 } else {
-                  // Gérer le cas où aucun nom de matériel n'est saisi
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Veuillez saisir un nom de matériel.'),
@@ -243,15 +228,12 @@ class _CRUDState extends State<CRUD> {
           probleme: false,
           updatedOn: Timestamp.now(),
         );
-        // Fermer la boîte de dialogue
         Navigator.pop(context);
         _textEditingController.clear();
       } catch (e) {
         print('Une erreur est survenue lors de l\'ajout du matériel: $e');
-        // Gérer les erreurs d'ajout du matériel
       }
     } else {
-      // Gérer le cas où aucun nom de matériel n'est saisi
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Veuillez saisir un nom de matériel.'),
@@ -339,7 +321,6 @@ class _CRUDState extends State<CRUD> {
                 String nom = nomController.text;
                 if (nom.isNotEmpty) {
                   try {
-                    // Mettre à jour le matériel dans la base de données
                     _databaseService.updateMateriel(
                       materielId,
                       Materiel(
@@ -347,17 +328,15 @@ class _CRUDState extends State<CRUD> {
                         probleme: probleme,
                         updatedOn: Timestamp.now(),
                         imageUrl:
-                            materiel.imageUrl, // Conserver l'URL de l'image
+                            materiel.imageUrl,
                       ),
                     );
                     Navigator.pop(context);
                   } catch (e) {
                     print(
                         'Une erreur est survenue lors de la mise à jour du matériel: $e');
-                    // Gérer l'erreur ici
                   }
                 } else {
-                  // Gérer le cas où aucun nom de matériel n'est saisi
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('Veuillez saisir un nom de matériel.'),
                   ));

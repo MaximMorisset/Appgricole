@@ -15,7 +15,7 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> {
-  late List<Reservation> reservations = []; // Liste pour stocker les réservations
+  late List<Reservation> reservations = [];
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +30,9 @@ class _BookingScreenState extends State<BookingScreen> {
             padding: const EdgeInsets.all(20),
             alignment: Alignment.center,
             child: Image.network(
-              widget.materielData.imageUrl, // URL de l'image du matériel
-              width: 200, // Largeur de l'image
-              height: 200, // Hauteur de l'image
+              widget.materielData.imageUrl,
+              width: 200,
+              height: 200,
             ),
           ),
           Expanded(
@@ -86,7 +86,6 @@ class _BookingScreenState extends State<BookingScreen> {
               borderRadius: 16,
             );
             if (pickedEndDate != null) {
-              // Afficher un dialogue pour entrer la surface
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -111,7 +110,6 @@ class _BookingScreenState extends State<BookingScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          // Effectuer la réservation et l'enregistrer dans Firestore
                           makeReservation(
                             pickedStartDate,
                             pickedEndDate,
@@ -134,31 +132,26 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 
-  // Fonction pour enregistrer une réservation dans Firestore
   Future<void> makeReservation(DateTime startDate, DateTime endDate, String materielId, double surface) async {
     try {
-      // Convertir les dates en format Timestamp pour Firestore
       Timestamp startTimestamp = Timestamp.fromDate(startDate);
       Timestamp endTimestamp = Timestamp.fromDate(endDate);
 
-      // Enregistrer la réservation dans la collection "reservation" de Firestore
       await FirebaseFirestore.instance.collection('reservation').add({
-        'userName': FirebaseAuth.instance.currentUser?.email, // Nom d'utilisateur = mail de l'utilisateur connecté
+        'userName': FirebaseAuth.instance.currentUser?.email,
         'startDate': startTimestamp,
         'endDate': endTimestamp,
         'surface': surface,
-        'problems': widget.materielData.probleme, // Problèmes = problème trouvé dans la table de matériel
-        'materielId': materielId, // ID du matériel
+        'problems': widget.materielData.probleme,
+        'materielId': materielId,
       });
 
-      // Afficher un message de confirmation à l'utilisateur
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Votre réservation a été enregistrée avec succès !"),
         ),
       );
     } catch (e) {
-      // Afficher un message d'erreur en cas d'échec de l'enregistrement de la réservation
       print("Erreur lors de l'enregistrement de la réservation: $e");
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -168,7 +161,6 @@ class _BookingScreenState extends State<BookingScreen> {
     }
   }
 
-  // Fonction pour formater la date (enlever les heures)
   String formatDate(DateTime date) {
     return "${date.day}/${date.month}/${date.year}";
   }
