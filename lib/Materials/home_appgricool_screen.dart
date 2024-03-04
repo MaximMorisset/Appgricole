@@ -8,7 +8,7 @@ import '../../auth/pages/profiles.dart';
 
 class MaterielHomeScreen extends StatefulWidget {
   final User user;
-  MaterielHomeScreen({required this.user});
+  const MaterielHomeScreen({super.key, required this.user});
 
   @override
   _MaterielHomeScreenState createState() => _MaterielHomeScreenState();
@@ -36,7 +36,7 @@ class _MaterielHomeScreenState extends State<MaterielHomeScreen>
                 children: <Widget>[
                   getAppBarUI(),
                   getFilterBarUI(),
-                  Expanded(
+                  const Expanded(
                     child: MaterielListView(),
                   )
                 ],
@@ -68,11 +68,11 @@ class _MaterielHomeScreenState extends State<MaterielHomeScreen>
               alignment: Alignment.centerLeft,
               width: AppBar().preferredSize.height + 40,
               height: AppBar().preferredSize.height,
-              child: Material(
+              child: const Material(
                 color: Colors.transparent,
               ),
             ),
-            Expanded(
+            const Expanded(
               child: Center(
                 child: Text(
                   'Appgricool',
@@ -83,7 +83,7 @@ class _MaterielHomeScreenState extends State<MaterielHomeScreen>
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               width: AppBar().preferredSize.height + 40,
               height: AppBar().preferredSize.height,
               child: Row(
@@ -97,8 +97,8 @@ class _MaterielHomeScreenState extends State<MaterielHomeScreen>
                         Radius.circular(32.0),
                       ),
                       onTap: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
                       ),
                     ),
                   ),
@@ -161,9 +161,9 @@ class _MaterielHomeScreenState extends State<MaterielHomeScreen>
                 const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 4),
             child: Row(
               children: <Widget>[
-                Expanded(
+                const Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0),
                   ),
                 ),
                 Material(
@@ -189,7 +189,7 @@ class _MaterielHomeScreenState extends State<MaterielHomeScreen>
                       padding: const EdgeInsets.only(left: 8),
                       child: Row(
                         children: <Widget>[
-                          Text(
+                          const Text(
                             'Ajouter',
                             style: TextStyle(
                               fontWeight: FontWeight.w100,

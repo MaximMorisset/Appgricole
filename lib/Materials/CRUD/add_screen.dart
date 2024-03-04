@@ -9,7 +9,7 @@ import '../../services/checkbox.dart';
 import './materiel.dart';
 
 class CRUD extends StatefulWidget {
-  const CRUD({Key? key}) : super(key: key);
+  const CRUD({super.key});
 
   @override
   State<CRUD> createState() => _CRUDState();
@@ -37,7 +37,7 @@ class _CRUDState extends State<CRUD> {
     } catch (error) {
       // Gérer les erreurs de téléchargement d'image ici
       print('Erreur lors du téléchargement de l\'image: $error');
-      throw error;
+      rethrow;
     }
   }
 
@@ -88,20 +88,20 @@ class _CRUDState extends State<CRUD> {
         stream: _databaseService.getMateriels(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Center(
+            return const Center(
               child: Text('Une erreur est survenue.'),
             );
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
           List<QueryDocumentSnapshot<Materiel>> materiels = snapshot.data!.docs;
           if (materiels.isEmpty) {
-            return Center(
+            return const Center(
               child: Text("Ajouter un Matériel"),
             );
           }
@@ -135,7 +135,7 @@ class _CRUDState extends State<CRUD> {
                       const SizedBox(height: 10),
                       Text(
                         materiel.nom,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -220,7 +220,7 @@ class _CRUDState extends State<CRUD> {
                 } else {
                   // Gérer le cas où aucun nom de matériel n'est saisi
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text('Veuillez saisir un nom de matériel.'),
                     ),
                   );
@@ -253,7 +253,7 @@ class _CRUDState extends State<CRUD> {
     } else {
       // Gérer le cas où aucun nom de matériel n'est saisi
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Veuillez saisir un nom de matériel.'),
         ),
       );
@@ -307,7 +307,7 @@ class _CRUDState extends State<CRUD> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Nom :"),
+              const Text("Nom :"),
               TextField(
                 controller: nomController,
                 decoration: const InputDecoration(
@@ -317,7 +317,7 @@ class _CRUDState extends State<CRUD> {
               const SizedBox(height: 10),
               Row(
                 children: [
-                  Text("Problème :"),
+                  const Text("Problème :"),
                   CheckboxWidget(
                     initialValue: probleme,
                     onChanged: (value) {
@@ -358,7 +358,7 @@ class _CRUDState extends State<CRUD> {
                   }
                 } else {
                   // Gérer le cas où aucun nom de matériel n'est saisi
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('Veuillez saisir un nom de matériel.'),
                   ));
                 }

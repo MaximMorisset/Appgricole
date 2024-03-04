@@ -25,9 +25,9 @@ class _BookingScreenState extends State<BookingScreen> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             alignment: Alignment.center,
             child: Image.network(
               widget.materielData.imageUrl, // URL de l'image du matériel
@@ -45,14 +45,14 @@ class _BookingScreenState extends State<BookingScreen> {
                   );
                 }
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
                 return SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: DataTable(
-                    columns: [
+                    columns: const [
                       DataColumn(label: Text('Nom')),
                       DataColumn(label: Text('Date de Prise')),
                       DataColumn(label: Text('Date de Remise')),
@@ -92,10 +92,10 @@ class _BookingScreenState extends State<BookingScreen> {
                 builder: (BuildContext context) {
                   double surface = 0.0;
                   return AlertDialog(
-                    title: Text("Surface"),
+                    title: const Text("Surface"),
                     content: TextFormField(
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Entrez la surface (en m²)",
                       ),
                       onChanged: (value) {
@@ -107,7 +107,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text('Annuler'),
+                        child: const Text('Annuler'),
                       ),
                       TextButton(
                         onPressed: () {
@@ -120,7 +120,7 @@ class _BookingScreenState extends State<BookingScreen> {
                           );
                           Navigator.of(context).pop();
                         },
-                        child: Text('Confirmer'),
+                        child: const Text('Confirmer'),
                       ),
                     ],
                   );
@@ -129,7 +129,7 @@ class _BookingScreenState extends State<BookingScreen> {
             }
           }
         },
-        child: Icon(Icons.calendar_today),
+        child: const Icon(Icons.calendar_today),
       ),
     );
   }
@@ -153,7 +153,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
       // Afficher un message de confirmation à l'utilisateur
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("Votre réservation a été enregistrée avec succès !"),
         ),
       );
@@ -161,7 +161,7 @@ class _BookingScreenState extends State<BookingScreen> {
       // Afficher un message d'erreur en cas d'échec de l'enregistrement de la réservation
       print("Erreur lors de l'enregistrement de la réservation: $e");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text("Une erreur s'est produite lors de l'enregistrement de la réservation."),
         ),
       );
@@ -182,7 +182,7 @@ class _BookingScreenState extends State<BookingScreen> {
           DataCell(Text(formatDate((data['startDate'] as Timestamp).toDate()))),
           DataCell(Text(formatDate((data['endDate'] as Timestamp).toDate()))),
           DataCell(Text(data['surface'].toString())),
-          DataCell(data['problems'] ?  Icon(Icons.close, color: Colors.red) : Icon(Icons.check, color: Colors.green)),
+          DataCell(data['problems'] ?  const Icon(Icons.close, color: Colors.red) : const Icon(Icons.check, color: Colors.green)),
         ],
       );
     }).toList();

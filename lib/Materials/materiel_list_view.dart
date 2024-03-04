@@ -1,79 +1,3 @@
-/*import 'package:Appgricool/Materials/booking_screen.dart';
-import 'package:Appgricool/services/utils.dart';
-import 'package:flutter/material.dart';
-import 'package:Appgricool/Materials/CRUD/add.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-class MaterielListView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot<Materiel>>(
-      stream: DatabaseService().getMateriels(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        }
-        if (snapshot.hasError) {
-          return Center(child: Text('Erreur: ${snapshot.error}'));
-        }
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return Center(child: Text('Aucun matériel trouvé'));
-        }
-        return ListView.builder(
-          itemCount: snapshot.data!.docs.length,
-          itemBuilder: (context, index) {
-            Materiel materiel = snapshot.data!.docs[index].data();
-            return InkWell(
-              splashColor: Colors.transparent,
-              onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => BookingScreen(materielData:materiel)));
-                  
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.6),
-                      offset: Offset(4, 4),
-                      blurRadius: 16,
-                    ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      AspectRatio(
-                        aspectRatio: 16 / 9,
-                        child: Image.network(
-                          materiel.imageUrl,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Text(
-                          materiel.nom,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-}*/
 import './booking_screen.dart';
 import 'package:flutter/material.dart';
 import '../services/utils.dart';
@@ -81,6 +5,8 @@ import './CRUD/materiel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MaterielListView extends StatefulWidget {
+  const MaterielListView({super.key});
+
   @override
   _MaterielListViewState createState() => _MaterielListViewState();
 }
@@ -105,7 +31,7 @@ class _MaterielListViewState extends State<MaterielListView> {
           child: TextField(
             controller: _searchController,
             onChanged: _onSearchTextChanged,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Rechercher...',
               prefixIcon: Icon(Icons.search),
             ),
@@ -116,13 +42,13 @@ class _MaterielListViewState extends State<MaterielListView> {
             stream: _materielsStream,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
               if (snapshot.hasError) {
                 return Center(child: Text('Erreur: ${snapshot.error}'));
               }
               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                return Center(child: Text('Aucun matériel trouvé'));
+                return const Center(child: Text('Aucun matériel trouvé'));
               }
               return ListView.builder(
                 itemCount: snapshot.data!.docs.length,

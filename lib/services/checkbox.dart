@@ -4,7 +4,7 @@ class CheckboxWidget extends StatefulWidget {
   final bool initialValue;
   final Function(bool) onChanged;
 
-  const CheckboxWidget({
+  const CheckboxWidget({super.key, 
     required this.initialValue,
     required this.onChanged,
   });
@@ -32,7 +32,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
         widget.onChanged(_isChecked);
       },
       child: Container(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
         ),

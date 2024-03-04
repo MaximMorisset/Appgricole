@@ -35,7 +35,6 @@ class DatabaseService {
         updatedOn: updatedOn,
       ));
     } catch (e) {
-      print(e);
       throw Exception(
           'Une erreur s\'est produite lors de l\'ajout du matériel');
     }
@@ -51,7 +50,6 @@ class DatabaseService {
         'nom': updatedMateriel.nom,
         'probleme': updatedMateriel.probleme,
         'updatedOn': updatedMateriel.updatedOn,
-        // Gardez l'URL de l'image inchangée
       });
     } catch (e) {
       throw Exception('Erreur lors de la mise à jour du matériel: $e');
@@ -62,7 +60,6 @@ class DatabaseService {
     try {
       await _materielsRef.doc(materielId).delete();
     } catch (e) {
-      print(e);
       throw Exception(
           'Une erreur s\'est produite lors de la suppression du matériel');
     }
@@ -71,7 +68,7 @@ class DatabaseService {
   Stream<QuerySnapshot<Materiel>> searchMateriels(String searchText) {
     return _materielsRef
         .where('nom', isGreaterThanOrEqualTo: searchText)
-        .where('nom', isLessThan: searchText + 'z')
+        .where('nom', isLessThan: '${searchText}z')
         .snapshots();
   }
 }
@@ -82,7 +79,6 @@ Future<File?> getImageFromGallery(BuildContext context) async {
         await GalleryPicker.pickMedia(context: context, singleMedia: true);
     return singleMedia?.first.getFile();
   } catch (e) {
-    print(e);
     throw Exception(
         'Une erreur s\'est produite lors de la sélection de l\'image');
   }
